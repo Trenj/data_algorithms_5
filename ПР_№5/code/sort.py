@@ -1,3 +1,5 @@
+import time
+
 def bubble_sort_positive(arr):
     n = len(arr)
     for i in range(n):
@@ -37,16 +39,44 @@ def comb_sort_positive(arr):
     return arr
 
 # Пример использования
-array = [6, 5, 3, 1, 2, -5, 7, -3, 8]
+array = []
+
+# Ввод имени файла пользователем
+filename = input("Введите имя файла: ")
+
+with open(filename, "r") as file:
+    for line in file:
+        array.append(int(line.strip()))  # Преобразуем каждую строку в число
+
 print("Исходный массив:", array)
 
-# Сортировка пузырьком
+# Время выполнения пузырьковой сортировки
+start_time = time.time()
 sorted_array_bubble = bubble_sort_positive(array.copy())
+bubble_sort_time = time.time() - start_time
 print("Отсортированный массив (пузырьковая сортировка):", sorted_array_bubble)
+print(f"Время выполнения пузырьковой сортировки: {bubble_sort_time:.6f} секунд")
 
-# Сортировка расческой
+# Время выполнения сортировки расческой
+start_time = time.time()
 sorted_array_comb = comb_sort_positive(array.copy())
-print("Отсортированный массив (расческая сортировка):", sorted_array_comb)
+comb_sort_time = time.time() - start_time
+print("Отсортированный массив (расческа-сортировка):", sorted_array_comb)
+print(f"Время выполнения сортировки расческой: {comb_sort_time:.6f} секунд")
+
+# Сравнение времени выполнения сортировок
+if bubble_sort_time < comb_sort_time:
+    faster_sort = "пузырьковая сортировка"
+    slower_sort_time = comb_sort_time
+    faster_sort_time = bubble_sort_time
+else:
+    faster_sort = "сортировка расческой"
+    slower_sort_time = bubble_sort_time
+    faster_sort_time = comb_sort_time
+
+ratio = slower_sort_time / faster_sort_time
+
+print(f"{faster_sort} быстрее в {ratio:.2f} раз")
 
 """
 7.Отсортировать положительные элементы одномерного массива, отрицательные оставить на местах.
